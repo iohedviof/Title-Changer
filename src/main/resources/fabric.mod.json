@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "titlechanger",
+  "version": "${version}",
+  "name": "Title Changer",
+  "description": "mod that changes your window title what did you expect lmao",
+  "authors": ["Alex"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/titlechanger/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "dev.titlechanger.titlechanger.client.TitlechangerDataGenerator"
+    ],
+    "client": [
+      "dev.titlechanger.titlechanger.client.TitlechangerClient"
+    ],
+    "modmenu": [
+      "dev.titlechanger.titlechanger.client.TitlechangerModMenu"
+    ],
+    "main": [
+      "dev.titlechanger.titlechanger.Titlechanger"
+    ]
+  },
+  "mixins": [
+    "titlechanger.mixins.json",
+    {
+      "config": "titlechanger.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
