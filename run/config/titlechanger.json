@@ -1,6 +1,16 @@
 {
   "enableTitleChanging": true,
-  "windowTitle": "Test Change",
+  "useTemplateTitles": false,
+  "templateUsePlayingName": false,
+  "templateUseDimensionSpecific": false,
+  "windowTitle": "",
   "openConfigKey": "key.keyboard.unknown",
-  "openConfigModifier": 0
+  "enableSetWindowTitleCommand": true,
+  "animationMode": "NONE",
+  "animationTitle": "",
+  "animationSpeed": 6,
+  "triggerOnSleep": true,
+  "triggerOnRespawn": true,
+  "triggerOnKill": true,
+  "triggerBindMode": "NONE"
 }

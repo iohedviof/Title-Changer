@@ -1,0 +1,37 @@
+/setwindowtitle 1
+/setwindowtitle Hi
+/setwindowtitle 1
+/setwindowtitle Example
+/setwindowtitle clear
+/setwindowtitle Hi
+/setwindowtitle Hello
+/setwindowtitle Hi
+/setwindowtitle 1
+/setwindowtitle Hi
+/kill @e[type=minecraft:ender_dragon[
+/kill @e[type=minecraft:ender_dragon]
+/setwindowtitle Hi
+/title Hi
+/help
+/test run
+/test runall
+/test runall 1111
+/setwindowtitle Hi
+/titlechanger animate typewriter Hi
+/titlechanger animate typewriter Hello this is testinginging
+/titlechanger animatespeed 5
+/titlechanger animate wave Hi
+/titlechanger animate wave Testing Modes
+/titlechanger animate fade Testing Modes
+/titlechanger animate pulse Testing Modes
+/titlechanger config
+/titlechanger bind on_kill
+/kill
+/titlechanger bind on_respawn
+/kill
+/time set night
+/kill
+/titlechanger title Hi
+/titlechanger title clear
+/titlechanger config
+/seed

@@ -14,7 +14,7 @@ public class MinecraftMixin {
     @Inject(method = "updateTitle", at = @At("TAIL"))
     private void titlechanger$updateTitle(CallbackInfo ci) {
         TitlechangerConfig config = TitlechangerConfigManager.get();
-        if (config.enableTitleChanging && config.windowTitle != null && !config.windowTitle.isBlank()) {
+        if (config.enableTitleChanging) {
             TitlechangerTitleUpdater.applyTitle();
         }
     }

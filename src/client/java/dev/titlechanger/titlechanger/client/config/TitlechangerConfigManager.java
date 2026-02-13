@@ -3,8 +3,6 @@ package dev.titlechanger.titlechanger.client.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.blaze3d.platform.InputConstants;
-import me.shedaniel.clothconfig2.api.Modifier;
-import me.shedaniel.clothconfig2.api.ModifierKeyCode;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.BufferedReader;
@@ -26,26 +24,16 @@ public final class TitlechangerConfigManager {
         return config;
     }
 
-    public static ModifierKeyCode getOpenConfigKeyCode() {
+    public static InputConstants.Key getOpenConfigKey() {
         String storedKey = config.openConfigKey == null ? "" : config.openConfigKey;
         if (storedKey.isBlank()) {
-            return ModifierKeyCode.unknown();
+            return InputConstants.UNKNOWN;
         }
         try {
-            return ModifierKeyCode.of(InputConstants.getKey(storedKey), Modifier.of(config.openConfigModifier));
+            return InputConstants.getKey(storedKey);
         } catch (Exception ignored) {
-            return ModifierKeyCode.unknown();
+            return InputConstants.UNKNOWN;
         }
-    }
-
-    public static void setOpenConfigKeyCode(ModifierKeyCode keyCode) {
-        if (keyCode == null) {
-            config.openConfigKey = "";
-            config.openConfigModifier = 0;
-            return;
-        }
-        config.openConfigKey = keyCode.getKeyCode().getName();
-        config.openConfigModifier = keyCode.getModifier().getValue();
     }
 
     public static void load() {
@@ -60,6 +48,27 @@ public final class TitlechangerConfigManager {
                 config = loaded;
                 if (config.openConfigKey == null) {
                     config.openConfigKey = "";
+                }
+                if (config.animationMode == null) {
+                    config.animationMode = TitlechangerConfig.AnimationMode.NONE;
+                }
+                if (config.animationTitle == null) {
+                    config.animationTitle = "";
+                }
+                config.animationSpeed = Math.max(
+                        TitlechangerConfig.MIN_ANIMATION_SPEED,
+                        Math.min(TitlechangerConfig.MAX_ANIMATION_SPEED, config.animationSpeed));
+                if (config.triggerBindMode == null) {
+                    config.triggerBindMode = TitlechangerConfig.TriggerBindMode.NONE;
+                }
+                if (!config.triggerOnSleep && !config.triggerOnRespawn && !config.triggerOnKill) {
+                    if (config.triggerBindMode == TitlechangerConfig.TriggerBindMode.ON_SLEEP) {
+                        config.triggerOnSleep = true;
+                    } else if (config.triggerBindMode == TitlechangerConfig.TriggerBindMode.ON_RESPAWN) {
+                        config.triggerOnRespawn = true;
+                    } else if (config.triggerBindMode == TitlechangerConfig.TriggerBindMode.ON_KILL) {
+                        config.triggerOnKill = true;
+                    }
                 }
             }
         } catch (IOException ignored) {
