@@ -5,8 +5,7 @@ Client-side Fabric mod that customizes the Minecraft window title.
 ## Platform Support
 
 - Loader: Fabric only
-- Mod version: 26.1.1
-- Minecraft compatibility declared in metadata: `>=26.1 <=26.1.1`
+- Mod version: 26.1.x
 
 ## Dependencies
 
