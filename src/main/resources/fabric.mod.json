@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "titlechanger",
-  "version": "${version}",
+  "version": "1.4.5",
   "name": "Title Changer",
   "description": "mod that changes your window title what did you expect lmao",
   "authors": ["Alex"],
@@ -38,7 +38,20 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "yet_another_config_lib_v3": "*",
-    "minecraft": ">=1.21 <=1.21.11"
+    "yet_another_config_lib_v3": ">=3.6.2",
+    "minecraft": ">=26.1 <=26.1.2"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu":{
+      "links": {
+        "modmenu.modrinth": "https://modrinth.com/mod/titlechanger"
+      }
+    }
   }
 }
+
+
+

@@ -1,9 +1,19 @@
 pluginManagement {
     repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
+        maven { url = 'https://maven.fabricmc.net/' }
         gradlePluginPortal()
     }
 }
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.shedaniel.me/' }
+        maven { url = 'https://maven.terraformersmc.com/releases' }
+        maven { url = 'https://maven.isxander.dev/releases' }
+        maven { url = 'https://maven.quiltmc.org/repository/release/' }
+    }
+}
+
+rootProject.name = 'titlechanger'

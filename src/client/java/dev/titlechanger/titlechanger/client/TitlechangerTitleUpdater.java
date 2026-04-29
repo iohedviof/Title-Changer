@@ -14,6 +14,7 @@ public final class TitlechangerTitleUpdater {
     private static boolean applying = false;
     private static String temporaryTitle = null;
     private static long temporaryTitleUntilMs = 0L;
+    private static String lastResolvedTemplateTitle = null;
 
     private TitlechangerTitleUpdater() {
     }
@@ -32,6 +33,7 @@ public final class TitlechangerTitleUpdater {
 
         TitlechangerConfig config = TitlechangerConfigManager.get();
         if (!config.enableTitleChanging) {
+            lastResolvedTemplateTitle = null;
             minecraft.updateTitle();
             return;
         }
@@ -65,10 +67,22 @@ public final class TitlechangerTitleUpdater {
         }
 
         if (targetTitle == null || targetTitle.isBlank()) {
+            if (config.useTemplateTitles
+                    && lastResolvedTemplateTitle != null
+                    && !lastResolvedTemplateTitle.isBlank()) {
+                minecraft.getWindow().setTitle(lastResolvedTemplateTitle);
+                return;
+            }
+            lastResolvedTemplateTitle = null;
             minecraft.updateTitle();
             return;
         }
 
+        if (config.useTemplateTitles) {
+            lastResolvedTemplateTitle = targetTitle;
+        } else {
+            lastResolvedTemplateTitle = null;
+        }
         // Minecraft may overwrite the title after our previous tick, so always apply.
         minecraft.getWindow().setTitle(targetTitle);
         } finally {

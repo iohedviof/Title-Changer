@@ -11,7 +11,7 @@ import dev.titlechanger.titlechanger.client.TitlechangerTitleUpdater;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class TitlechangerConfigScreen {
     private TitlechangerConfigScreen() {
@@ -85,7 +85,7 @@ public final class TitlechangerConfigScreen {
                 .name(Component.literal("Window Title"))
                 .description(OptionDescription.createBuilder()
                         .text(Component.literal("Your desired window title (e.g. Alex's Minecraft Instance* 1.21.11). Also, sorry for the slightly pixelated picture example on top of this description :("))
-                        .image(ResourceLocation.parse("titlechanger:textures/gui/example.png"), 128, 128)
+                        .image(Identifier.parse("titlechanger:textures/gui/example.png"), 128, 128)
                         .build())
                 .binding("", () -> config.windowTitle, value -> config.windowTitle = value)
                 .controller(StringControllerBuilder::create)

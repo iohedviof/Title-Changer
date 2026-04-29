@@ -1,10 +1,10 @@
 plugins {
-    id 'fabric-loom' version '1.15-SNAPSHOT'
-    id 'maven-publish'
+    id 'net.fabricmc.fabric-loom' version '1.15.5'
+    id 'java-library'
 }
 
-version = project.mod_version
 group = project.maven_group
+version = project.mod_version
 
 base {
     archivesName = project.archives_base_name
@@ -14,83 +14,62 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        "titlechanger" {
+        titlechanger {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }
     }
-}
 
-fabricApi {
-    configureDataGeneration {
-        client = true
+    runs {
+        client {
+            runDir 'run'
+        }
     }
 }
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases" }
-    maven { url "https://maven.isxander.dev/releases" }
-    maven { url "https://maven.quiltmc.org/repository/release/" }
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+    maven { url = 'https://maven.shedaniel.me/' }
+    maven { url = 'https://maven.terraformersmc.com/releases' }
+    maven { url = 'https://maven.isxander.dev/releases' }
+    maven { url = 'https://maven.quiltmc.org/repository/release/' }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-}
-
-processResources {
-    inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
-    filteringCharset "UTF-8"
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+    implementation "dev.isxander:yet-another-config-lib:${project.yacl_fabric_version}"
+    compileOnly("com.terraformersmc:modmenu:${project.modmenu_version}") {
+        transitive = false
     }
 }
 
-def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        it.options.release.set(targetJavaVersion)
-    }
+    options.encoding = 'UTF-8'
+    options.release.set(Integer.parseInt(project.java_release))
 }
 
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Integer.parseInt(project.java_release))
     }
     withSourcesJar()
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archives_base_name}" }
-    }
-}
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'minecraft_version', project.minecraft_version
+    inputs.property 'loader_version', project.fabric_loader_version
 
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            artifactId = project.archives_base_name
-            from components.java
-        }
-    }
-
-    repositories {
-        mavenCentral()
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://api.modrinth.com/maven" }
+    filesMatching('fabric.mod.json') {
+        expand(
+                version: project.version,
+                minecraft_version: project.minecraft_version,
+                loader_version: project.fabric_loader_version
+        )
     }
 }

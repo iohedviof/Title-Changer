@@ -1,7 +1,7 @@
 package dev.titlechanger.titlechanger.client.config;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
 
@@ -26,7 +26,7 @@ public final class TitlechangerKeybinds {
         if (mapping == null) {
             return;
         }
-        OPEN_CONFIG_KEY = KeyBindingHelper.registerKeyBinding(mapping);
+        OPEN_CONFIG_KEY = KeyMappingHelper.registerKeyMapping(mapping);
     }
 
     public static void applyKeyCode(InputConstants.Key keyCode) {
